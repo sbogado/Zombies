@@ -85,12 +85,6 @@
 	</build>
 
 	<dependencies>
-
-		<dependency>
-			<groupId>zombies</groupId>
-			<artifactId>ZombiesMultiplayerInterface</artifactId>
-			<version>0.0.1-SNAPSHOT</version>
-		</dependency>
 		<dependency>
 			<groupId>com.uqbar</groupId>
 			<artifactId>vainilla</artifactId>
@@ -103,12 +97,5 @@
 			<scope>test</scope>
 		</dependency>
 	</dependencies>
-
-
-
-
-
-
-
 
 </project>

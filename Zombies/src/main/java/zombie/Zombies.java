@@ -26,7 +26,7 @@ public class Zombies extends Game {
 	
 	@Override
 	protected void initializeResources() {
-		dimension = new Dimension(1000, 800);
+		dimension = new Dimension(800, 600);
 
 	}
 

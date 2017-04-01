@@ -7,11 +7,19 @@ import java.awt.Graphics2D;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.uqbar.vainilla.DeltaState;
+import com.uqbar.vainilla.GameComponent;
+import com.uqbar.vainilla.appearances.Label;
+import com.uqbar.vainilla.events.constants.Key;
+import com.uqbar.vainilla.sound.Sound;
+
+import ar.edu.unq.games.vainillautils.AnimationRotateMoved;
+import ar.edu.unq.games.vainillautils.SpriteMoved;
+import ar.edu.unq.games.vainillautils.Vector2D;
 import sound.SoundBuilderZombie;
 import zombie.Zombies;
 import zombie.scene.rules.ChoqueParedRulePersonaje;
 import zombie.scene.rules.ColisionRule;
-import zombies.receptors.MultiplayerPerson;
 import zombies.zombiescene.armas.Arma;
 import zombies.zombiescene.armas.Benelli;
 import zombies.zombiescene.armas.Beretta;
@@ -19,17 +27,8 @@ import zombies.zombiescene.armas.MP5;
 import zombies.zombiescene.personajestates.PersonajeState;
 import zombies.zombiescene.personajestates.PersonajeStateQuieto;
 import zombiescene.strategies.ControlDelJugador;
-import ar.edu.unq.games.vainillautils.AnimationRotateMoved;
-import ar.edu.unq.games.vainillautils.SpriteMoved;
-import ar.edu.unq.games.vainillautils.Vector2D;
 
-import com.uqbar.vainilla.DeltaState;
-import com.uqbar.vainilla.GameComponent;
-import com.uqbar.vainilla.appearances.Label;
-import com.uqbar.vainilla.events.constants.Key;
-import com.uqbar.vainilla.sound.Sound;
-
-public class Personaje extends GameComponent<ZombiesScene> implements Individuo,MultiplayerPerson{
+public class Personaje extends GameComponent<ZombiesScene> implements Individuo{
 
 	private Arma arma;
 	private int currentWeapon = 0;
@@ -74,7 +73,7 @@ public class Personaje extends GameComponent<ZombiesScene> implements Individuo,
 			double yMin, double yMax, ControlDelJugador strategy) {
 		super(imagenParado, x, y);
 		
-		this.label = new Label(new Font("verdana",  Font.BOLD, 12), Color.green, "3");
+		this.setLabel(new Label(new Font("verdana",  Font.BOLD, 12), Color.green, "3"));
 		this.setZ(1);
 		this.setVelocidad(300);
 		this.punteria = 1;
@@ -506,6 +505,14 @@ public class Personaje extends GameComponent<ZombiesScene> implements Individuo,
 
 	public void setPunteria(double punteria) {
 		this.punteria = punteria;
+	}
+
+	public Label getLabel() {
+		return label;
+	}
+
+	public void setLabel(Label label) {
+		this.label = label;
 	}
 
 	
