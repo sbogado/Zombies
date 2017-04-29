@@ -1,0 +1,45 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:c="http://java.sun.com/jstl/core"
+	xmlns:p="http://primefaces.org/ui">
+
+	<p:dialog id="#{id}dialogId" widgetVar="#{id}dialog" draggable="false" resizable="false">
+		<h:form id="#{id}form">
+
+			<p:growl id="#{id}growl" life="3000" />
+
+			<h:panelGrid columns="2" cellpadding="5">
+				<h:outputLabel for="#{id}username" value="Username:" />
+				<p:inputText id="#{id}username" value="#{registrationCtrl.username}"
+					required="true" label="#{id}username" />
+
+				<h:outputLabel for="#{id}password" value="Contraseña:" />
+				<p:password id="#{id}password" value="#{registrationCtrl.password}"
+					required="true" label="#{id}password" />
+
+				<h:outputLabel for="#{id}repeatPassword" value="Repetir Contraseña:" />
+				<p:password id="#{id}repeatPassword"
+					value="#{registrationCtrl.repeatPassword}" required="true"
+					label="#{id}repeatPassword" />
+
+				<h:outputLabel for="#{id}email" value="Email:" />
+				<p:inputText id="#{id}email"
+					value="#{registrationCtrl.email}" required="true"
+					label="#{id}email" />
+
+				<f:facet name="footer">
+					<p:commandButton value="Registrarse" update="#{id}form loginPanel"
+						actionListener="#{registrationCtrl.saveOperation()}"
+						oncomplete="if(!args.validationFailed) {
+                                PF('#{id}dialog').hide();
+                            }" />
+				</f:facet>
+			</h:panelGrid>
+		</h:form>
+
+	</p:dialog>
+
+
+</ui:composition>

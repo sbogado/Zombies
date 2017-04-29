@@ -1,7 +1,7 @@
 package zombie.zombiescene.monstruostates;
 
 import zombie.Zombies;
-import zombies.scene.Barricada;
+import zombies.scene.components.Barricada;
 import zombies.scene.monstruos.Monstruo;
 import ar.edu.unq.games.vainillautils.AnimationLowCost;
 import ar.edu.unq.games.vainillautils.Vector2D;

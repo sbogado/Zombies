@@ -25,7 +25,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.PriorityQueue;
 
-import zombies.scene.Mapa;
+import zombies.scene.components.Mapa;
 
 public class Dijkstra extends AlgoritmoDeBusqueda {
 	

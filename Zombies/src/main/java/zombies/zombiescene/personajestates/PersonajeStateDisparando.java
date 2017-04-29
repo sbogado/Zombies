@@ -1,8 +1,8 @@
 package zombies.zombiescene.personajestates;
 
 import zombie.Zombies;
-import zombies.scene.Bala;
-import zombies.scene.Personaje;
+import zombies.scene.components.Bala;
+import zombies.scene.components.Personaje;
 import ar.edu.unq.games.vainillautils.AnimationRotateMoved;
 import ar.edu.unq.games.vainillautils.Vector2D;
 

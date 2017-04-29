@@ -1,7 +1,7 @@
 package zombies.zombiescene.armas;
 
 import sound.SoundBuilderZombie;
-import zombies.scene.Personaje;
+import zombies.scene.components.Personaje;
 import ar.edu.unq.games.vainillautils.SpriteMoved;
 
 import com.uqbar.vainilla.appearances.Animation;

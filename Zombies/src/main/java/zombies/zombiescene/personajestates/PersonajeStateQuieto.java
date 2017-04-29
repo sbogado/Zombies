@@ -1,7 +1,7 @@
 package zombies.zombiescene.personajestates;
 
-import zombies.scene.Personaje;
 import ar.edu.unq.games.vainillautils.AnimationRotateMoved;
+import zombies.scene.components.Personaje;
 
 import com.uqbar.vainilla.DeltaState;
 

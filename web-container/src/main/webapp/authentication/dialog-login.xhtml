@@ -1,0 +1,36 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:c="http://java.sun.com/jstl/core"
+	xmlns:p="http://primefaces.org/ui">
+
+	<p:dialog id="#{id}dialogId" widgetVar="#{id}dialog"
+		draggable="false" resizable="false">
+		<h:form id="#{id}form">
+			
+			<p:growl id="#{id}growl" life="3000" />
+		
+			<h:panelGrid columns="2" cellpadding="5">
+				<h:outputLabel for="username" value="Username:" />
+				<p:inputText id="username" value="#{authenticationCtrl.username}"
+					required="true" label="username" />
+
+				<h:outputLabel for="password" value="Password:" />
+				<p:password id="password" value="#{authenticationCtrl.password}"
+					required="true" label="password" />
+
+				<f:facet name="footer">
+					<p:commandButton value="Login" update="#{id}form loginPanel"
+						actionListener="#{authenticationCtrl.saveOperation()}"
+						oncomplete="if(!args.validationFailed) {
+                                PF('#{id}dialog').hide();
+                            }"/>
+				</f:facet>
+			</h:panelGrid>
+		</h:form>
+
+	</p:dialog>
+
+
+</ui:composition>

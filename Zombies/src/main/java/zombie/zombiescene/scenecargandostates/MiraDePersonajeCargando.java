@@ -1,7 +1,6 @@
 package zombie.zombiescene.scenecargandostates;
 
-import zombie.introscene.CargandoJuego;
-import zombies.scene.ZombiesScene;
+import zombies.scene.scenes.ZombiesScene;
 
 public class MiraDePersonajeCargando extends ZombieSceneCargando {
 

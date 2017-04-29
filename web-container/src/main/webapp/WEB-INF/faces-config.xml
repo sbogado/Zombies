@@ -1,0 +1,12 @@
+<faces-config version="2.0" 
+    xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-facesconfig_2_0.xsd" 
+    xmlns="http://java.sun.com/xml/ns/javaee" 
+    xmlns:xi="http://www.w3.org/2001/XInclude" 
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+	<application>
+		<el-resolver>
+    		    org.springframework.web.jsf.el.SpringBeanFacesELResolver
+		</el-resolver>
+  	</application>
+<!-- This file must be present with our jar, even if it is empty.  Otherwise, our Java annotations won't get scanned! -->
+</faces-config>

@@ -1,0 +1,37 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:c="http://java.sun.com/jstl/core"
+	xmlns:p="http://primefaces.org/ui">
+
+	<h:form id="loginPanel">
+
+		<p:menubar>
+			<p:menuitem rendered="#{authenticationCtrl.user != null}" value="Bienvenido #{authenticationCtrl.user.name}" />
+			<f:facet name="options">
+				<p:commandButton 
+					value="Registración" update="loginPanel registrationPanelform"
+					actionListener="#{registrationCtrl.initialize()}"
+					icon="ui-icon-extlink" onclick="PF('registrationPaneldialog').show();" />
+
+				<p:commandButton rendered="#{authenticationCtrl.user == null}"
+					value="Login" update="loginPanel loginPanelform"
+					actionListener="#{authenticationCtrl.initialize()}"
+					icon="ui-icon-extlink" onclick="PF('loginPaneldialog').show();" />
+
+				<p:commandButton rendered="#{authenticationCtrl.user != null}"
+					value="Logout" update="loginPanel"
+					actionListener="#{authenticationCtrl.logout}"
+					action="index?faces-redirect=true" icon="ui-icon-extlink" />
+			</f:facet>
+		</p:menubar>
+	</h:form>
+	<ui:include src="/authentication/dialog-login.xhtml">
+		<ui:param name="id" value="loginPanel" />
+	</ui:include>
+	<ui:include src="/authentication/dialog-registration.xhtml">
+		<ui:param name="id" value="registrationPanel" />
+	</ui:include>
+
+</ui:composition>

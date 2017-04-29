@@ -3,7 +3,7 @@ package zombie.introscene;
 import java.awt.Dimension;
 
 import zombie.Zombies;
-import zombies.scene.ZombiesScene;
+import zombies.scene.scenes.ZombiesScene;
 
 import com.uqbar.vainilla.GameScene;
 

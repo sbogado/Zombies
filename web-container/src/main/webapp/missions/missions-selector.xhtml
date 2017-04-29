@@ -1,0 +1,24 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:c="http://java.sun.com/jstl/core"
+	xmlns:p="http://primefaces.org/ui">
+
+	<h:form id="missionsSelectorPanel">
+		<p:carousel value="#{missionsCtrl.missions}" var="mission"
+			numVisible="1" effect="easeInStrong" headerText="Misiones"
+			style="margin-bottom:0">
+			<p:tab title="#{mission.name}">
+				<h:panelGrid columns="2" cellpadding="10">
+					<p:commandLink update="#{externalPanelToUpdate}" actionListener="#{gameStarterCtrl.setMission(mission)}" >
+						<p:graphicImage url="#{mission.image}" width="200" height="200" />
+					</p:commandLink>
+					<h:outputText value="#{mission.description}" />
+				</h:panelGrid>
+			</p:tab>
+		</p:carousel>
+	</h:form>
+
+
+</ui:composition>

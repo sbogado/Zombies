@@ -5,11 +5,11 @@ import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.Graphics2D;
 
-import zombies.scene.Personaje;
-
 import com.uqbar.vainilla.DeltaState;
 import com.uqbar.vainilla.GameComponent;
 import com.uqbar.vainilla.appearances.Label;
+
+import zombies.scene.components.Personaje;
 
 public class CargandoJuego extends GameComponent<IntroScene>{
 	

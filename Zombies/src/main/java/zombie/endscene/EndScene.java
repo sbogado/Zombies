@@ -2,10 +2,10 @@ package zombie.endscene;
 
 import java.awt.Dimension;
 
-import zombies.scene.ZombiesScene;
-
 import com.uqbar.vainilla.GameScene;
 import com.uqbar.vainilla.appearances.Sprite;
+
+import zombies.scene.scenes.ZombiesScene;
 
 public class EndScene extends GameScene {
 

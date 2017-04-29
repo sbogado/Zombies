@@ -13,7 +13,7 @@ public abstract class SoundZombie extends Sound {
 	}
 
 	public void play(float volume) {
-		Zombies.player.enqueueSound(this, volume);
+		Zombies.soundPlayer.enqueueSound(this, volume);
 	}
 	
 	public SoundZombie(byte[] input, AudioFormat inputFormat) {

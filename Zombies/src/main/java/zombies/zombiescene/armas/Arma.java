@@ -1,9 +1,9 @@
 package zombies.zombiescene.armas;
 
 import sound.SoundBuilderZombie;
-import zombies.scene.Bala;
-import zombies.scene.Personaje;
-import zombies.scene.ZombiesScene;
+import zombies.scene.components.Bala;
+import zombies.scene.components.Personaje;
+import zombies.scene.scenes.ZombiesScene;
 import ar.edu.unq.games.vainillautils.Vector2D;
 
 import com.uqbar.vainilla.DeltaState;

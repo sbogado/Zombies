@@ -1,6 +1,6 @@
 package zombie.scene.rules;
 
-import zombies.scene.Barricada;
+import zombies.scene.components.Barricada;
 import zombies.scene.monstruos.Monstruo;
 import ar.edu.unq.games.vainillautils.Vector2D;
 

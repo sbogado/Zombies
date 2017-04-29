@@ -1,7 +1,7 @@
 package zombie.scene.rules;
 
-import zombies.scene.ZombiesScene;
 import ar.edu.unq.games.vainillautils.Vector2D;
+import zombies.scene.scenes.ZombiesScene;
 
 import com.uqbar.vainilla.GameComponent;
 

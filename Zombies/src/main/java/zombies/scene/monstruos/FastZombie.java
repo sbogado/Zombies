@@ -8,9 +8,9 @@ import zombie.scene.rules.ChoqueBarricadaRule;
 import zombie.scene.rules.ChoqueParedRule;
 import zombie.scene.rules.ColisionRule;
 import zombie.scene.rules.DesplazamientoLibreRule;
-import zombies.scene.Mapa;
-import zombies.scene.ZombiesRule;
-import zombies.scene.ZombiesScene;
+import zombies.scene.components.Mapa;
+import zombies.scene.components.ZombiesRule;
+import zombies.scene.scenes.ZombiesScene;
 import zombies.scene.zombiesappearences.FastZombieAppearences;
 import ar.edu.unq.games.vainillautils.AnimationLowCost;
 

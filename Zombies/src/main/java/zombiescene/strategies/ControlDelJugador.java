@@ -1,11 +1,11 @@
 package zombiescene.strategies;
 
-import zombies.scene.Personaje;
-import zombies.scene.ZombiesScene;
-
 import com.uqbar.vainilla.DeltaState;
 import com.uqbar.vainilla.events.constants.Key;
 import com.uqbar.vainilla.events.constants.MouseButton;
+
+import zombies.scene.components.Personaje;
+import zombies.scene.scenes.ZombiesScene;
 
 public class ControlDelJugador  {
 

@@ -2,13 +2,13 @@ package zombie.scene.rules;
 
 
 import zombie.zombiescene.monstruostates.MonstruoState;
-import zombies.scene.Bala;
-import zombies.scene.Barricada;
-import zombies.scene.GolpeDeMonstruo;
-import zombies.scene.Pared;
-import zombies.scene.Personaje;
-import zombies.scene.ZombiesScene;
+import zombies.scene.components.Bala;
+import zombies.scene.components.Barricada;
+import zombies.scene.components.GolpeDeMonstruo;
+import zombies.scene.components.Pared;
+import zombies.scene.components.Personaje;
 import zombies.scene.monstruos.Monstruo;
+import zombies.scene.scenes.ZombiesScene;
 import ar.edu.unq.games.vainillautils.RectangleColision;
 import ar.edu.unq.games.vainillautils.Vector2D;
 

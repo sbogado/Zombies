@@ -16,7 +16,7 @@ public class Index {
 			SonidoAparte sonido = new SonidoAparte();
 			new DesktopGameLauncherNoVisible(sonido).launch();
 			
-			Zombies.player = sonido.getSoundPlayer();
+			Zombies.soundPlayer = sonido.getSoundPlayer();
 			
 			new DesktopGameLauncher(game).launch();
 	    }

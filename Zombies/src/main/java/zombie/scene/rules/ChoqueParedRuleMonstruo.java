@@ -3,9 +3,9 @@ package zombie.scene.rules;
 import com.uqbar.vainilla.DeltaState;
 import com.uqbar.vainilla.colissions.CollisionDetector;
 
-import zombies.scene.Barricada;
-import zombies.scene.Pared;
-import zombies.scene.Personaje;
+import zombies.scene.components.Barricada;
+import zombies.scene.components.Pared;
+import zombies.scene.components.Personaje;
 import zombies.scene.monstruos.Monstruo;
 
 public class ChoqueParedRuleMonstruo implements ChoqueParedRule{

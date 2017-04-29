@@ -5,6 +5,7 @@ import org.junit.Assert;
 import org.junit.Test;
 
 import zombie.zombiescene.algoritmosdemonstruos.Dijkstra;
+import zombies.scene.components.Mapa;
 
 
 

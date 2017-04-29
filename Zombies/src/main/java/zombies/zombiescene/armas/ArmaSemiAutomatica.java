@@ -1,9 +1,9 @@
 package zombies.zombiescene.armas;
 
-import zombies.scene.Personaje;
-
 import com.uqbar.vainilla.DeltaState;
 import com.uqbar.vainilla.events.constants.MouseButton;
+
+import zombies.scene.components.Personaje;
 
 public abstract class ArmaSemiAutomatica extends Arma{
 

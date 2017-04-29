@@ -1,8 +1,8 @@
 package zombie.scene.rules;
 
-import zombies.scene.Barricada;
-import zombies.scene.Pared;
-import zombies.scene.Personaje;
+import zombies.scene.components.Barricada;
+import zombies.scene.components.Pared;
+import zombies.scene.components.Personaje;
 import zombies.scene.monstruos.Monstruo;
 import ar.edu.unq.games.vainillautils.RectangleColision;
 

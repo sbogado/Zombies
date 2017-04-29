@@ -5,7 +5,7 @@ import java.awt.Color;
 import java.awt.Font;
 
 import zombie.Zombies;
-import zombies.scene.ZombiesScene;
+import zombies.scene.scenes.ZombiesScene;
 
 import com.uqbar.vainilla.DeltaState;
 import com.uqbar.vainilla.GameComponent;
@@ -22,7 +22,7 @@ public class WinOrLoseComponent extends GameComponent<EndScene> {
 	@Override
 	public void update(DeltaState deltaState) {
 		if(deltaState.isKeyPressed(Key.ENTER)) {
-			((Zombies) this.getGame()).buildIntroScene();
+			((Zombies) this.getGame()).closeWindow();
 		}
 		super.update(deltaState);
 	}

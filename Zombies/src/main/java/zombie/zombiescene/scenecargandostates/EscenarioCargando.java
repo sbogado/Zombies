@@ -1,6 +1,6 @@
 package zombie.zombiescene.scenecargandostates;
 
-import zombies.scene.ZombiesScene;
+import zombies.scene.scenes.ZombiesScene;
 
 public class EscenarioCargando extends ZombieSceneCargando {
 
