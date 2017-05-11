@@ -7,7 +7,7 @@ import org.springframework.stereotype.Service;
 
 import zombies.model.authentication.UserCredential;
 import zombies.model.dao.DaoGeneric;
-import zombies.model.dao.UserCredentialDao;
+import zombies.model.dao.DaoUserCredential;
 import zombies.model.service.UserCredentialService;
 
 @Service
@@ -17,10 +17,10 @@ public class UserCredentialServiceImpl extends GenericABMService<UserCredential>
 	private static final long serialVersionUID = -741243545533573744L;
 	
 	@Autowired
-	UserCredentialDao dao;
+	DaoUserCredential dao;
 
 	public UserCredential findByName(String playerName) throws Exception{
-		return ((UserCredentialDao) getDao()).findByName(playerName);
+		return ((DaoUserCredential) getDao()).findByName(playerName);
 	}
 
 	@Override

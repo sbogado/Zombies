@@ -773,4 +773,13 @@ public class Pool {
 		return fatZombies;
 	}
 	
+	public List<Monstruo> getAllZombies(){
+		List<Monstruo> monstruos = new ArrayList<Monstruo>();
+		monstruos.addAll(this.getFastZombies());
+		monstruos.addAll(this.getFatZombies());
+		monstruos.addAll(this.getSlowZombies());
+		
+		return monstruos;
+	}
+	
 }

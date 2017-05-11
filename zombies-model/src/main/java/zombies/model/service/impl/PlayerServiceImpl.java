@@ -1,13 +1,14 @@
 package zombies.model.service.impl;
 
 import java.io.Serializable;
+import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import zombies.model.dao.DaoGeneric;
 import zombies.model.dao.DaoPlayer;
 import zombies.model.model.Player;
+import zombies.model.model.PlayerMission;
 import zombies.model.service.PlayerService;
 
 @Service
@@ -22,8 +23,13 @@ public class PlayerServiceImpl extends GenericABMService<Player> implements Seri
 		return ((DaoPlayer) getDao()).findByName(playerName);
 	}
 
+	public List<PlayerMission> findMissions(Long playerId) throws Exception{
+		return getDao().findMissions(playerId);
+		
+	}
+	
 	@Override
-	public DaoGeneric<Player> getDao() {
+	public DaoPlayer getDao() {
 		return playerDao;
 	}
 

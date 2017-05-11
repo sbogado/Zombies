@@ -44,7 +44,7 @@ public class UserCredential implements Serializable {
 	@Column(name = "USER_LAST_LOGIN")
 	private Date lastLogin;
 
-	@OneToOne(cascade = { CascadeType.MERGE })
+	@OneToOne
 	@JoinColumn(name = "PLAYER_ID", nullable = false)
 	private Player player;
 

@@ -12,6 +12,9 @@ import com.uqbar.vainilla.sound.Sound;
 
 public abstract class Arma {
 
+	private static final double SPEED_RECHARGE_TIME_GAINED_PER_PLAYER_SPEED_RECHARGE = 0.2;
+	
+	
 	Personaje personaje;
 	private int cantidadDeBalas;
 	private int cantidadBalasMax;
@@ -61,7 +64,7 @@ public abstract class Arma {
 	
 	public void recargar(){
 		this.getRecargaSound().play(5);
-		this.tiempoDeRecarga = this.getTiempoDeRecarga();
+		this.tiempoDeRecarga = calculateRechargeTime();
 		if(this.cantidadDeBalasNoCargadas == -1){ //Balas infinitas :P
 			this.cantidadDeBalas = this.cantidadBalasMax;
 		}
@@ -77,6 +80,10 @@ public abstract class Arma {
 				this.cantidadDeBalasNoCargadas = 0;
 			}
 		}
+	}
+
+	private double calculateRechargeTime() {
+		return this.getTiempoDeRecarga() - (SPEED_RECHARGE_TIME_GAINED_PER_PLAYER_SPEED_RECHARGE * personaje.getPlayer().getSpeedRecharge());
 	}
 	
 	public void descontarBala(){
@@ -118,12 +125,17 @@ public abstract class Arma {
 	}
 
 	public boolean disparaSinBalas(DeltaState delta) {
-		// TODO Auto-generated method stub
 		return !this.estaRecargando() && this.getCantidadDeBalas() == 0 && this.tiempoTranscurridoDesdeUltimoDisparo >= this.tiempoMuertoDeDisparo() && this.checkDisparo(delta);
 	}
 
-	
-	
+	public Personaje getPersonaje() {
+		return personaje;
+	}
+
+	public void setPersonaje(Personaje personaje) {
+		this.personaje = personaje;
+	}
+
 	public void dispararSinBalas() {
 		this.tiempoTranscurridoDesdeUltimoDisparo = 0;
 		this.sonidoSinBalas.play();		

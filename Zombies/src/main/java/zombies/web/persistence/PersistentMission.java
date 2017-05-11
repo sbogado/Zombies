@@ -1,13 +1,9 @@
 package zombies.web.persistence;
 
+import zombies.web.observer.MissionObserver;
+
 public interface PersistentMission {
 
-	public Integer getAmountOfZombiesToKill();
-
-	public void setAmountOfZombiesToKill(Integer amountOfZombiesToKill);
-
-	public Double getAmountOfTimeToSurvive();
-
-	public void setAmountOfTimeToSurvive(Double amountOfTimeToSurvive);
+	public Boolean isAcomplished(MissionObserver observer);
 	
 }

@@ -5,19 +5,21 @@
 	xmlns:c="http://java.sun.com/jstl/core"
 	xmlns:p="http://primefaces.org/ui">
 
-	<p:dialog id="#{id}dialogId" widgetVar="#{id}dialog"
+	<p:dialog id="#{id}dialogId" header="Login" widgetVar="#{id}dialog"
 		draggable="false" resizable="false">
 		<h:form id="#{id}form">
 			
-			<p:growl id="#{id}growl" life="3000" />
+			<p:growl id="#{id}growl" life="6000" />
 		
 			<h:panelGrid columns="2" cellpadding="5">
 				<h:outputLabel for="username" value="Username:" />
 				<p:inputText id="username" value="#{authenticationCtrl.username}"
+					requiredMessage="Nombre de Usuario Requerido"
 					required="true" label="username" />
 
 				<h:outputLabel for="password" value="Password:" />
 				<p:password id="password" value="#{authenticationCtrl.password}"
+					requiredMessage="Contraseña Requerida"
 					required="true" label="password" />
 
 				<f:facet name="footer">

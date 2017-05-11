@@ -15,9 +15,12 @@ import zombie.endscene.EndScene;
 import zombie.introscene.IntroScene;
 import zombie.introscene.ReproductorDeSonidoDeFondo;
 import zombies.scene.scenes.ZombiesScene;
-import zombies.web.observer.MonsterObserver;
+import zombies.web.observer.ExperienceGainedObserver;
+import zombies.web.observer.MissionObserver;
+import zombies.web.observer.MonsterKilledObserver;
 import zombies.web.observer.TimeObserver;
-import zombies.web.persistence.MissionObserver;
+import zombies.web.persistence.GameStarter;
+import zombies.web.persistence.PersistentMission;
 import zombies.web.persistence.PersistentPlayer;
 
 public class Zombies extends Game {
@@ -30,19 +33,36 @@ public class Zombies extends Game {
 	private IntroScene introScene;
 	public static SoundPlayerZombie soundPlayer;
 	private PersistentPlayer player;
-	private MissionObserver mission;
+	private GameStarter gameStarter;
+	private PersistentMission mission;
+	private MissionObserver missionObserver;
+	private ExperienceGainedObserver experienceGainedObserver;
 	private List<TimeObserver> timeObservers;
-	private List<MonsterObserver> monsterObservers;
+	private List<MonsterKilledObserver> monsterKilledObservers;
 	private List<GameComponent<ZombiesScene>> externalComponents;
 
 	@Override
 	protected void initializeResources() {
 		dimension = new Dimension(800, 600);
-
+		addGameObservers();
 	}
 	
-	public void readAllData(ZombiesScene scene) {
+	private void addGameObservers() {
+		MissionObserver missionObserver = new MissionObserver();
+		this.setMissionObserver(missionObserver);
+		this.getMonsterKilledObservers().add(missionObserver);
+		this.getTimeObservers().add(missionObserver);
+		
+		ExperienceGainedObserver experienceGainedObserver = new ExperienceGainedObserver();
+		this.getMonsterKilledObservers().add(experienceGainedObserver);
+	}
 
+	public void updatePlayer(){
+		getGameStarter().update(getPlayer());
+	}
+
+	public void addRewardToPlayer() {
+		getPlayer().addExperience(getExperienceGainedObserver().getExperienceGained());
 	}
 
 	public boolean isPaused() {
@@ -132,15 +152,15 @@ public class Zombies extends Game {
 		this.player = player;
 	}
 
-	public List<MonsterObserver> getMonsterObservers() {
-		if(monsterObservers == null){
-			monsterObservers = new ArrayList<MonsterObserver>();
+	public List<MonsterKilledObserver> getMonsterKilledObservers() {
+		if(monsterKilledObservers == null){
+			monsterKilledObservers = new ArrayList<MonsterKilledObserver>();
 		}
-		return monsterObservers;
+		return monsterKilledObservers;
 	}
 
-	public void setMonsterObservers(List<MonsterObserver> observer) {
-		this.monsterObservers = observer;
+	public void setMonsterKilledObservers(List<MonsterKilledObserver> observer) {
+		this.monsterKilledObservers = observer;
 	}
 
 	public List<GameComponent<ZombiesScene>> getExternalComponents() {
@@ -165,12 +185,20 @@ public class Zombies extends Game {
 		this.timeObservers = timeObservers;
 	}
 
-	public MissionObserver getMission() {
+	public PersistentMission getMission() {
 		return mission;
 	}
 
-	public void setMission(MissionObserver mission) {
+	public void setMission(PersistentMission mission) {
 		this.mission = mission;
+	}
+	
+	public MissionObserver getMissionObserver() {
+		return missionObserver;
+	}
+
+	public void setMissionObserver(MissionObserver missionObserver) {
+		this.missionObserver = missionObserver;
 	}
 
 	public JFrame getWindow() {
@@ -179,6 +207,26 @@ public class Zombies extends Game {
 
 	public void setWindow(JFrame window) {
 		this.window = window;
+	}
+
+
+
+	public GameStarter getGameStarter() {
+		return gameStarter;
+	}
+
+
+
+	public void setGameStarter(GameStarter gameStarter) {
+		this.gameStarter = gameStarter;
+	}
+
+	public ExperienceGainedObserver getExperienceGainedObserver() {
+		return experienceGainedObserver;
+	}
+
+	public void setExperienceGainedObserver(ExperienceGainedObserver experienceGainedObserver) {
+		this.experienceGainedObserver = experienceGainedObserver;
 	}
 
 }

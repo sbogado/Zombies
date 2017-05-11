@@ -1,6 +1,8 @@
 package zombies.web.auth;
 
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 import java.util.logging.Level;
 
 import javax.faces.bean.ManagedBean;
@@ -9,7 +11,13 @@ import javax.faces.bean.SessionScoped;
 import javax.faces.context.FacesContext;
 
 import zombies.model.authentication.UserCredential;
+import zombies.model.model.Mission;
 import zombies.model.model.Player;
+import zombies.model.model.PlayerMission;
+import zombies.model.model.PlayerMissionId;
+import zombies.model.service.MissionService;
+import zombies.model.service.PlayerLevelService;
+import zombies.model.service.PlayerService;
 import zombies.model.service.UserCredentialService;
 import zombies.web.AbstractController;
 
@@ -19,9 +27,19 @@ public class RegistrationCtrl extends AbstractController {
 
 	
 	
+	private static final int INITIAL_PLAYER_LEVEL = 1;
+
+	private static final int INITIAL_SKILL_POINTS = 0;
+
+	private static final int INITIAL_SPEED_RECHARGE = 1;
+
+	private static final int INITIAL_MOVEMENT = 1;
+
+	private static final int INITIAL_MONEY = 0;
+
 	private static final int INITIAL_TOTAL_LIFE = 100;
 
-	private static final double INITIAL_HIT_RECOVERY = 0.5;
+	private static final int INITIAL_HIT_RECOVERY = 1;
 
 	private static final int INITIAL_EXPERIENCE = 0;
 
@@ -29,10 +47,17 @@ public class RegistrationCtrl extends AbstractController {
 
 	private static final int INITIAL_AIM = 1;
 
-	private static final int INITIAL_LEVEL = 1;
-
 	@ManagedProperty(value = "#{userCredentialServiceImpl}")
 	private UserCredentialService userCredentialService;
+	
+	@ManagedProperty(value = "#{playerLevelServiceImpl}")
+	private PlayerLevelService playerLevelService;
+	
+	@ManagedProperty(value = "#{playerServiceImpl}")
+	private PlayerService playerService;
+	
+	@ManagedProperty(value = "#{missionServiceImpl}")
+	private MissionService missionService;
 
 	private UserCredential user;
 	private Player player;
@@ -73,23 +98,62 @@ public class RegistrationCtrl extends AbstractController {
 
 	private void persistUser() {
 		try {
+			getUser().setPlayer(getPlayerService().update(getUser().getPlayer()));
 			setUser(getUserCredentialService().update(getUser()));
+			initializePlayerMissions(getUser().getPlayer());
+			getUser().setPlayer(getPlayerService().update(getUser().getPlayer()));
+			setPlayer(getUser().getPlayer());
 		} catch (Exception e1) {
-			logger.log(Level.SEVERE,"Could not persist",e1);
+			logger.log(Level.SEVERE,"Could not persist player",e1);
+			addErrorMessage("Ocurrio un error, no se pudo registrar el usuario", "Ocurrio un error, no se pudo registrar el usuario");
+			FacesContext.getCurrentInstance().validationFailed();
 		}
 	}
 
 	private Player initializePLayer() {
 		Player player = new Player();
 		player.setName(getUsername());
-		player.setActualLevel(INITIAL_LEVEL);
 		player.setAim(INITIAL_AIM);
 		player.setScene(INITIAL_SCENE);
 		player.setExperience(INITIAL_EXPERIENCE);
 		player.setHitRecovery(INITIAL_HIT_RECOVERY);
 		player.setTotalLife(INITIAL_TOTAL_LIFE);
+		player.setMoney(INITIAL_MONEY);
+		player.setMovement(INITIAL_MOVEMENT);
+		player.setSpeedRecharge(INITIAL_SPEED_RECHARGE);
+		player.setSkillPoints(INITIAL_SKILL_POINTS);
+		
+		
+		initializePlayerLevel(player);
 		
 		return player;
+	}
+
+	private void initializePlayerMissions(Player player) {
+		player.setMissions(new ArrayList<PlayerMission>());
+		PlayerMission actualPlayerMission;
+		List<Mission> missions;
+		try {
+			missions = getMissionService().findMissionsToShow();
+			for(Mission mission : missions){
+				actualPlayerMission = new PlayerMission();
+				actualPlayerMission.setMission(mission);
+				actualPlayerMission.setIsAcomplished(false);
+				actualPlayerMission.setId(new PlayerMissionId(player.getId(),mission.getId()));
+				player.getMissions().add(actualPlayerMission);
+			}
+		} catch (Exception e) {
+			logger.log(Level.SEVERE,"Could not initialize player missions",e);
+		}
+
+	}
+
+	private void initializePlayerLevel(Player player) {
+		try {
+			player.setPlayerLevel(getPlayerLevelService().findByNumber(INITIAL_PLAYER_LEVEL));
+		} catch (Exception e) {
+			logger.log(Level.SEVERE,"Could not retrieve first Level",e);
+		}
 	}
 
 	public UserCredential getUser() {
@@ -116,12 +180,36 @@ public class RegistrationCtrl extends AbstractController {
 		this.password = password;
 	}
 
+	public MissionService getMissionService() {
+		return missionService;
+	}
+
+	public void setMissionService(MissionService missionService) {
+		this.missionService = missionService;
+	}
+	
 	public UserCredentialService getUserCredentialService() {
 		return userCredentialService;
 	}
 
 	public void setUserCredentialService(UserCredentialService userCredentialService) {
 		this.userCredentialService = userCredentialService;
+	}
+	
+	public PlayerLevelService getPlayerLevelService() {
+		return playerLevelService;
+	}
+
+	public void setPlayerLevelService(PlayerLevelService playerLevelService) {
+		this.playerLevelService = playerLevelService;
+	}
+	
+	public PlayerService getPlayerService() {
+		return playerService;
+	}
+
+	public void setPlayerService(PlayerService playerService) {
+		this.playerService = playerService;
 	}
 
 	public Player getPlayer() {

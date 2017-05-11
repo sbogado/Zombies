@@ -16,6 +16,7 @@ import ar.edu.unq.games.vainillautils.AnimationLowCost;
 
 public class SlowZombie extends Monstruo {
 	
+	private static final int EXPERIENCE = 50;
 	private List<ZombiesRule> rules = new ArrayList<ZombiesRule>();
 	private DesplazamientoLibreRule desplazamientoRule;
 	private ColisionRule colisionRule;
@@ -254,12 +255,10 @@ public class SlowZombie extends Monstruo {
 		}
 	}
 
-
-
-
-
-
-
+	@Override
+	public Integer getExperience() {
+		return EXPERIENCE;
+	}
 
 }
 	

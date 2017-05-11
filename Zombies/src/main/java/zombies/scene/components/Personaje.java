@@ -33,6 +33,7 @@ import zombiescene.strategies.ControlDelJugador;
 public class Personaje extends GameComponent<ZombiesScene> implements Individuo{
 
 	
+	private static final double BASE_HIT_RECOVERY_TIME = 0.5;
 	private PersistentPlayer player;
 	private Arma arma;
 	private int currentWeapon = 0;
@@ -66,7 +67,7 @@ public class Personaje extends GameComponent<ZombiesScene> implements Individuo{
 	private boolean estaVivo;
 	private ColisionRule colisionRule;
 	private boolean estaImpactado = false;
-	private double tiempoDeRecuperacionDeImpacto = 0.5;
+	private double tiempoDeRecuperacionDeImpacto = BASE_HIT_RECOVERY_TIME;
 	private AnimationRotateMoved disparandoAnimation;
 	private AnimationRotateMoved quietoAnimation;
 	private AnimationRotateMoved personajeMuertoAnimation;
@@ -301,10 +302,10 @@ public class Personaje extends GameComponent<ZombiesScene> implements Individuo{
 
 			}
 			else{
-				this.tiempoDeRecuperacionDeImpacto = this.tiempoDeRecuperacionDeImpacto - deltaState.getDelta();
-				if(this.tiempoDeRecuperacionDeImpacto <= 0){
+				setTiempoDeRecuperacionDeImpacto(getTiempoDeRecuperacionDeImpacto() - deltaState.getDelta());
+				if(getTiempoDeRecuperacionDeImpacto() <= 0){
 					this.estaImpactado = false;
-					this.setTiempoDeRecuperacionDeImpacto();
+					this.resetTiempoDeRecuperacionDeImpacto();
 				}
 			}
 			
@@ -347,8 +348,16 @@ public class Personaje extends GameComponent<ZombiesScene> implements Individuo{
 		super.destroy();
 	}
 	
-	private void setTiempoDeRecuperacionDeImpacto() {
-		this.tiempoDeRecuperacionDeImpacto = 0.1;
+	public double getTiempoDeRecuperacionDeImpacto() {
+		return tiempoDeRecuperacionDeImpacto;
+	}
+
+	public void setTiempoDeRecuperacionDeImpacto(double tiempoDeRecuperacionDeImpacto) {
+		this.tiempoDeRecuperacionDeImpacto = tiempoDeRecuperacionDeImpacto;
+	}
+
+	private void resetTiempoDeRecuperacionDeImpacto() {
+		this.tiempoDeRecuperacionDeImpacto = BASE_HIT_RECOVERY_TIME ;
 	}
 
 	public boolean getEstaVivo() {

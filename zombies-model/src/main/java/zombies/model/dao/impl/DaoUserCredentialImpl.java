@@ -12,10 +12,10 @@ import javax.persistence.criteria.Root;
 import org.springframework.stereotype.Repository;
 
 import zombies.model.authentication.UserCredential;
-import zombies.model.dao.UserCredentialDao;
+import zombies.model.dao.DaoUserCredential;
 
 @Repository
-public class UserCredentialDaoImpl extends DaoGenericImpl<UserCredential> implements UserCredentialDao{
+public class DaoUserCredentialImpl extends DaoGenericImpl<UserCredential> implements DaoUserCredential{
 
 	public UserCredential findByName(String name) throws Exception{
 		CriteriaBuilder cb = em.getCriteriaBuilder();

@@ -5,13 +5,16 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.Inheritance;
+import javax.persistence.InheritanceType;
 import javax.persistence.Table;
 
 import zombies.web.persistence.PersistentMission;
 
 @Entity
+@Inheritance(strategy=InheritanceType.JOINED)
 @Table(name = "MISSION")
-public class Mission implements PersistentMission{
+public abstract class Mission implements PersistentMission{
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
@@ -24,14 +27,14 @@ public class Mission implements PersistentMission{
 	@Column(name = "MISSION_DESCRIPTION")
 	private String description;
 
-	@Column(name = "MISSION_AMOUNT_OF_ZOMBIES_TO_KILL")
-	private Integer amountOfZombiesToKill;
-
-	@Column(name = "MISSION_AMOUNT_OF_TIME_TO_SURVIVE")
-	private Double amountOfTimeToSurvive;
-
 	@Column(name = "MISSION_IMAGE")
 	private String image;
+	
+	@Column(name = "MISSION_ORDER")
+	private Integer order;
+	
+	@Column(name = "MISSION_HAS_TO_SHOW")
+	private Boolean hasToShow;
 
 	/**********************************************************************************************
 	 * GETTERS AND SETTERS
@@ -51,28 +54,6 @@ public class Mission implements PersistentMission{
 
 	public void setName(String name) {
 		this.name = name;
-	}
-
-	public Integer getAmountOfZombiesToKill() {
-		if (amountOfZombiesToKill == null) {
-			amountOfZombiesToKill = 0;
-		}
-		return amountOfZombiesToKill;
-	}
-
-	public void setAmountOfZombiesToKill(Integer amountOfZombiesToKill) {
-		this.amountOfZombiesToKill = amountOfZombiesToKill;
-	}
-
-	public Double getAmountOfTimeToSurvive() {
-		if (amountOfTimeToSurvive == null) {
-			amountOfTimeToSurvive = new Double(0);
-		}
-		return amountOfTimeToSurvive;
-	}
-
-	public void setAmountOfTimeToSurvive(Double amountOfTimeToSurvive) {
-		this.amountOfTimeToSurvive = amountOfTimeToSurvive;
 	}
 
 	public String getDescription() {

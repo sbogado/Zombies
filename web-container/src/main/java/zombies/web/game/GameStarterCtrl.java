@@ -1,5 +1,7 @@
 package zombies.web.game;
 
+import java.util.logging.Level;
+
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ManagedProperty;
 import javax.faces.bean.SessionScoped;
@@ -12,22 +14,29 @@ import zombie.DesktopGameLauncherNoVisible;
 import zombie.SonidoAparte;
 import zombie.Zombies;
 import zombies.model.model.Mission;
+import zombies.model.model.Player;
+import zombies.model.model.PlayerMission;
+import zombies.model.service.PlayerMissionService;
 import zombies.model.service.PlayerService;
 import zombies.web.AbstractController;
 import zombies.web.auth.AuthenticationCtrl;
-import zombies.web.persistence.MissionObserver;
+import zombies.web.persistence.GameStarter;
+import zombies.web.persistence.PersistentPlayer;
 
 @ManagedBean
 @SessionScoped
-public class GameStarterCtrl extends AbstractController {
+public class GameStarterCtrl extends AbstractController implements GameStarter{
 
 	@ManagedProperty(value = "#{playerServiceImpl}")
 	private PlayerService playerService;
+	
+	@ManagedProperty(value = "#{playerMissionServiceImpl}")
+	private PlayerMissionService playerMissionService;
 
 	@ManagedProperty(value = "#{authenticationCtrl}")
 	private AuthenticationCtrl authenticationCtrl;
 	
-	private Mission mission;
+	private PlayerMission playerMission;
 
 	public void start() {
 
@@ -37,12 +46,11 @@ public class GameStarterCtrl extends AbstractController {
 			addWarningMessage("Es necesario estar logueado primero", "Es necesario estar logueado primero");
 			FacesContext.getCurrentInstance().validationFailed();
 		}
-
 	}
 
 	private void startGame() {
 		Zombies game = new Zombies();
-		addGameObservers(game);
+		game.setGameStarter(this);
 		game.setPlayer(getAuthenticationCtrl().getUser().getPlayer());
 		
 		SonidoAparte sonido = new SonidoAparte();
@@ -56,17 +64,29 @@ public class GameStarterCtrl extends AbstractController {
 		launcher.launch();
 	}
 
-	private void addGameObservers(Zombies game) {
-		MissionObserver missionObserver = new MissionObserver(getMission());
-		game.setMission(missionObserver);
-		game.getMonsterObservers().add(missionObserver);
-		game.getTimeObservers().add(missionObserver);
+	public void update(PersistentPlayer player){
+		try {
+			getPlayerMission().setIsAcomplished(true);
+			getPlayerMissionService().update(getPlayerMission());
+			Player persistedPlayer = getPlayerService().update((Player) player);
+			getAuthenticationCtrl().getUser().setPlayer(persistedPlayer);
+		} catch (Exception e) {
+			logger.log(Level.SEVERE,"Could not update Player", e);
+		}
 	}
-
+	
 	/***********************************
 	 * GETTERS AND SETTERS
 	 *******************/
 
+	public PlayerMissionService getPlayerMissionService() {
+		return playerMissionService;
+	}
+
+	public void setPlayerMissionService(PlayerMissionService playerMissionService) {
+		this.playerMissionService = playerMissionService;
+	}
+	
 	public PlayerService getPlayerService() {
 		return playerService;
 	}
@@ -84,11 +104,15 @@ public class GameStarterCtrl extends AbstractController {
 	}
 
 	public Mission getMission() {
-		return mission;
+		return playerMission.getMission();
+	}
+	
+	public PlayerMission getPlayerMission() {
+		return playerMission;
 	}
 
-	public void setMission(Mission mission) {
-		this.mission = mission;
+	public void setPlayerMission(PlayerMission playerMission) {
+		this.playerMission = playerMission;
 	}
 
 }

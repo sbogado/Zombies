@@ -28,10 +28,10 @@ import zombies.scene.components.Mapa;
 import zombies.scene.components.Personaje;
 import zombies.scene.components.ZombiesRule;
 import zombies.scene.scenes.ZombiesScene;
-import zombies.web.observer.MonsterObserver;
-import zombies.web.observer.MonsterSubject;
+import zombies.web.observer.MonsterKilledObserver;
+import zombies.web.observer.MonsterKilledSubject;
 
-public abstract class Monstruo extends GameComponent<ZombiesScene> implements MonsterSubject{
+public abstract class Monstruo extends GameComponent<ZombiesScene> implements MonsterKilledSubject{
 
 	private Vector2D posicionAnterior;
 	private double tiempoDeMuerte;
@@ -58,7 +58,7 @@ public abstract class Monstruo extends GameComponent<ZombiesScene> implements Mo
 	private int danio;
 	private double vida;
 	private double tiempoMuertoDeGolpeMax;
-	private List<MonsterObserver> observers;
+	private List<MonsterKilledObserver> monsterKilledObservers;
 
 	public Monstruo(double xInicial, double yInicial, double puntoAtaqueX, double puntoAtaqueY, Mapa mapa,
 			int velocidad, int puntos, double recuperacionDeImpacto, int danio, int vida, double tiempoDeGolpe,
@@ -80,8 +80,6 @@ public abstract class Monstruo extends GameComponent<ZombiesScene> implements Mo
 		this.yInicial = yInicial;
 		this.setZ(-1);
 		this.algoritmoDeBusqueda = BusquedaPorHabitacionFarmHouse.INSTANCE;
-		// this.algoritmoDeBusqueda = new Shadow();
-		// this.algoritmoDeBusqueda = new Dijkstra(( (108*71)+1),10000, mapa);
 		this.direccion = new Vector2D(0, -1);
 		this.rotation = 0;
 		this.puntoDeAtaque = new Vector2D(puntoAtaqueX, puntoAtaqueY);
@@ -92,19 +90,19 @@ public abstract class Monstruo extends GameComponent<ZombiesScene> implements Mo
 	 *****************************/
 
 	@Override
-	public void add(MonsterObserver observer) {
-		this.getObservers().add(observer);
+	public void addMonsterKilledObserver(MonsterKilledObserver observer) {
+		this.getMonsterKilledObservers().add(observer);
 	}
 
 	@Override
-	public void remove(MonsterObserver observer) {
-		this.getObservers().remove(observer);
+	public void removeMonsterKilledObserver(MonsterKilledObserver observer) {
+		this.getMonsterKilledObservers().remove(observer);
 	}
 	
 	@Override
 	public void notifyMonsterKilledToObservers() {
-		for(MonsterObserver observer : getObservers()){
-			observer.notifyMonsterKilledToObserver();
+		for(MonsterKilledObserver observer : getMonsterKilledObservers()){
+			observer.notifyMonsterKilledToObserver(this);
 		}
 	}
 
@@ -119,6 +117,8 @@ public abstract class Monstruo extends GameComponent<ZombiesScene> implements Mo
 		this.monstruoState = new MonstruoStateEntrando(this);
 	}
 
+	/**************************************************** ABSTRACT METHODS ***********************/
+	
 	public abstract void sonidoDeMuerte();
 
 	public abstract AnimationLowCost getImagenCaminando();
@@ -164,7 +164,11 @@ public abstract class Monstruo extends GameComponent<ZombiesScene> implements Mo
 	public abstract void sonidoDeSalida();
 
 	public abstract void sonidoGolpeandoBarricada();
+	
+	public abstract Integer getExperience();
 
+	/**************************************************** ABSTRACT METHODS ***********************/
+	
 	public boolean getEstaVivo() {
 		return this.getVida() > 0;
 	}
@@ -476,15 +480,15 @@ public abstract class Monstruo extends GameComponent<ZombiesScene> implements Mo
 		this.caminoHaciaPersonaje = camino;
 	}
 
-	public List<MonsterObserver> getObservers() {
-		if(observers == null){
-			observers = new ArrayList<MonsterObserver>();
+	public List<MonsterKilledObserver> getMonsterKilledObservers() {
+		if(monsterKilledObservers == null){
+			monsterKilledObservers = new ArrayList<MonsterKilledObserver>();
 		}
-		return observers;
+		return monsterKilledObservers;
 	}
 
-	public void setObservers(List<MonsterObserver> observers) {
-		this.observers = observers;
+	public void setMonsterKilledObservers(List<MonsterKilledObserver> observers) {
+		this.monsterKilledObservers = observers;
 	}
 
 	public void setPuntoDeAtaque(Vector2D puntoDeAtaque) {
@@ -519,5 +523,6 @@ public abstract class Monstruo extends GameComponent<ZombiesScene> implements Mo
 	public Vector2D getPosicionAnterior() {
 		return posicionAnterior;
 	}
+
 
 }

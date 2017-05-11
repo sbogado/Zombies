@@ -6,15 +6,16 @@
 	xmlns:p="http://primefaces.org/ui">
 
 	<h:form id="missionsSelectorPanel">
-		<p:carousel value="#{missionsCtrl.missions}" var="mission"
+		<p:carousel value="#{missionsCtrl.missions}" var="playerMission"
 			numVisible="1" effect="easeInStrong" headerText="Misiones"
 			style="margin-bottom:0">
-			<p:tab title="#{mission.name}">
+			<p:tab title="#{playerMission.mission.name}">
 				<h:panelGrid columns="2" cellpadding="10">
-					<p:commandLink update="#{externalPanelToUpdate}" actionListener="#{gameStarterCtrl.setMission(mission)}" >
-						<p:graphicImage url="#{mission.image}" width="200" height="200" />
+					<p:commandLink update="#{externalPanelToUpdate}" actionListener="#{gameStarterCtrl.setPlayerMission(playerMission)}" >
+						<p:graphicImage url="#{playerMission.mission.image}" width="200" height="200" />
 					</p:commandLink>
-					<h:outputText value="#{mission.description}" />
+					<h:outputText value="#{playerMission.mission.description}" />
+					<h:outputText rendered="#{playerMission.isAcomplished}" value="#{playerMission.isAcomplished ? 'Mision Completada' : '' }" />
 				</h:panelGrid>
 			</p:tab>
 		</p:carousel>

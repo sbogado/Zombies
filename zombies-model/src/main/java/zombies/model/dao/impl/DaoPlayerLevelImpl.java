@@ -11,25 +11,25 @@ import javax.persistence.criteria.Root;
 
 import org.springframework.stereotype.Repository;
 
-import zombies.model.dao.DaoPlayer;
-import zombies.model.model.Player;
+import zombies.model.dao.DaoPlayerLevel;
+import zombies.model.model.PlayerLevel;
 
 @Repository
-public class PlayerDaoImpl extends DaoGenericImpl<Player> implements DaoPlayer{
+public class DaoPlayerLevelImpl extends DaoGenericImpl<PlayerLevel> implements DaoPlayerLevel{
 
-	public Player findByName(String playerName){
+	public PlayerLevel findByNumber(Integer number){
 		CriteriaBuilder cb = em.getCriteriaBuilder();
-		CriteriaQuery<Player> criteria = cb.createQuery(Player.class);
-		Root<Player> root = criteria.from(Player.class);
+		CriteriaQuery<PlayerLevel> criteria = cb.createQuery(PlayerLevel.class);
+		Root<PlayerLevel> root = criteria.from(PlayerLevel.class);
 		
 		List<Predicate> predicates = new ArrayList<Predicate>();
-		predicates.add(cb.equal(root.get("name"),playerName));	
+		predicates.add(cb.equal(root.get("number"),number));	
 		
 		criteria.where(predicates.toArray(new Predicate[predicates.size()]));
-		TypedQuery<Player> q = em.createQuery(criteria);
+		TypedQuery<PlayerLevel> q = em.createQuery(criteria);
 		
 		return q.getSingleResult();
 
 	}
-	
+
 }

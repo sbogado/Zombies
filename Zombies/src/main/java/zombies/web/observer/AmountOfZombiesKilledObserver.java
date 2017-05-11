@@ -7,9 +7,10 @@ import com.uqbar.vainilla.DeltaState;
 import com.uqbar.vainilla.GameComponent;
 import com.uqbar.vainilla.appearances.Label;
 
+import zombies.scene.monstruos.Monstruo;
 import zombies.scene.scenes.ZombiesScene;
 
-public class AmountOfZombiesKilledObserver  extends GameComponent<ZombiesScene> implements MonsterObserver {
+public class AmountOfZombiesKilledObserver  extends GameComponent<ZombiesScene> implements MonsterKilledObserver {
 
 	private Integer amountOfZombiesKilled;
 	
@@ -26,7 +27,7 @@ public class AmountOfZombiesKilledObserver  extends GameComponent<ZombiesScene> 
 	} 
 	
 	@Override
-	public void notifyMonsterKilledToObserver() {
+	public void notifyMonsterKilledToObserver(Monstruo monstruo) {
 		this.setAmountOfZombiesKilled(getAmountOfZombiesKilled() + 1);
 	}
 

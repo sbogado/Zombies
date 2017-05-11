@@ -3,6 +3,7 @@ package zombies.scene.monstruos;
 import java.util.ArrayList;
 import java.util.List;
 
+import ar.edu.unq.games.vainillautils.AnimationLowCost;
 import sound.SoundZombie;
 import zombie.scene.rules.ChoqueBarricadaRule;
 import zombie.scene.rules.ChoqueParedRule;
@@ -11,12 +12,11 @@ import zombie.scene.rules.DesplazamientoLibreRule;
 import zombies.scene.components.Mapa;
 import zombies.scene.components.ZombiesRule;
 import zombies.scene.scenes.ZombiesScene;
-import zombies.scene.zombiesappearences.FastZombieAppearences;
 import zombies.scene.zombiesappearences.FatZombieAppearences;
-import ar.edu.unq.games.vainillautils.AnimationLowCost;
 
 public class FatZombie extends Monstruo {
 	
+	private static final int EXPERIENCE = 500;
 	private List<ZombiesRule> rules = new ArrayList<ZombiesRule>();
 	private DesplazamientoLibreRule desplazamientoRule;
 	private ColisionRule colisionRule;
@@ -253,6 +253,11 @@ public class FatZombie extends Monstruo {
 
 			}
 		}
+	}
+
+	@Override
+	public Integer getExperience() {
+		return EXPERIENCE;
 	}
 
 

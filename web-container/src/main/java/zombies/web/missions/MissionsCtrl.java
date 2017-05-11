@@ -7,31 +7,29 @@ import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ManagedProperty;
 import javax.faces.bean.SessionScoped;
 
-import zombies.model.model.Mission;
-import zombies.model.service.MissionService;
+import zombies.model.model.PlayerMission;
+import zombies.model.service.PlayerService;
 import zombies.web.AbstractController;
+import zombies.web.auth.AuthenticationCtrl;
 
 @ManagedBean
 @SessionScoped
 public class MissionsCtrl extends AbstractController {
 
-	@ManagedProperty(value = "#{missionServiceImpl}")
-	private MissionService missionService;
-
-	List<Mission> missions;
+	@ManagedProperty(value = "#{playerServiceImpl}")
+	private PlayerService playerService;
 	
-	public MissionService getMissionService() {
-		return missionService;
-	}
+	@ManagedProperty(value = "#{authenticationCtrl}")
+	private AuthenticationCtrl authenticationCtrl;
 
-	public void setMissionService(MissionService missionService) {
-		this.missionService = missionService;
-	}
+	List<PlayerMission> missions;
 	
-	public List<Mission> getMissions(){
+	
+	
+	public List<PlayerMission> getMissions(){
 		if(missions == null){
 			try {
-				setMissions(getMissionService().genericSearchAll());
+				setMissions(getPlayerService().findMissions(getAuthenticationCtrl().getUser().getPlayer().getId()));
 			} catch (Exception e) {
 				logger.log(Level.SEVERE, "Could not retrieve Missions",e);
 			}
@@ -40,7 +38,24 @@ public class MissionsCtrl extends AbstractController {
 		return missions;
 	}
 
-	public void setMissions(List<Mission> missions) {
+	public void setMissions(List<PlayerMission> missions) {
 		this.missions = missions;
 	}
+
+	public PlayerService getPlayerService() {
+		return playerService;
+	}
+
+	public void setPlayerService(PlayerService playerService) {
+		this.playerService = playerService;
+	}
+
+	public AuthenticationCtrl getAuthenticationCtrl() {
+		return authenticationCtrl;
+	}
+
+	public void setAuthenticationCtrl(AuthenticationCtrl authenticationCtrl) {
+		this.authenticationCtrl = authenticationCtrl;
+	}
+
 }
