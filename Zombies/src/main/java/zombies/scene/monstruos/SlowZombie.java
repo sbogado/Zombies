@@ -17,6 +17,8 @@ import ar.edu.unq.games.vainillautils.AnimationLowCost;
 public class SlowZombie extends Monstruo {
 	
 	private static final int EXPERIENCE = 50;
+	private static final int MONSTER_TOTAL_LIFE = 50;
+	
 	private List<ZombiesRule> rules = new ArrayList<ZombiesRule>();
 	private DesplazamientoLibreRule desplazamientoRule;
 	private ColisionRule colisionRule;
@@ -52,7 +54,7 @@ public class SlowZombie extends Monstruo {
 				,10 //puntos o exp
 				,0.3 // tiempo De Recuperacion De Impacto
 				,30 // danio
-				,200 //vida
+				,MONSTER_TOTAL_LIFE //vida
 				,1 // tiempo de golpe
 				,scena);// escena
 		

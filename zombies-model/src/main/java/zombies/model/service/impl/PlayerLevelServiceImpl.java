@@ -27,6 +27,10 @@ public class PlayerLevelServiceImpl extends GenericABMService<PlayerLevel> imple
 		return getDao().findByNumber(number);
 	}
 
+	@Override
+	public PlayerLevel findById(Long id)  throws Exception {
+		return getDao().find(id);
+	}
 
 
 }

@@ -16,7 +16,6 @@ import zombies.model.model.Mission;
 
 @Repository
 public class DaoMissionImpl extends DaoGenericImpl<Mission> implements DaoMission{
-
 	
 	public List<Mission> findMissionsToShow() throws Exception{
 		CriteriaBuilder cb = em.getCriteriaBuilder();

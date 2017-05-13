@@ -48,19 +48,23 @@ public class Zombies extends Game {
 	}
 	
 	private void addGameObservers() {
-		MissionObserver missionObserver = new MissionObserver();
-		this.setMissionObserver(missionObserver);
-		this.getMonsterKilledObservers().add(missionObserver);
-		this.getTimeObservers().add(missionObserver);
+		setMissionObserver(new MissionObserver());
+		this.setMissionObserver(getMissionObserver());
+		this.getMonsterKilledObservers().add(getMissionObserver());
+		this.getTimeObservers().add(getMissionObserver());
 		
-		ExperienceGainedObserver experienceGainedObserver = new ExperienceGainedObserver();
-		this.getMonsterKilledObservers().add(experienceGainedObserver);
+		 setExperienceGainedObserver( new ExperienceGainedObserver());
+		this.getMonsterKilledObservers().add(getExperienceGainedObserver());
 	}
 
 	public void updatePlayer(){
 		getGameStarter().update(getPlayer());
 	}
 
+	public void updatePlayerMissionToAcomplished(){
+		getGameStarter().updatePlayerMissionToAcomplished(getPlayer());
+	}
+	
 	public void addRewardToPlayer() {
 		getPlayer().addExperience(getExperienceGainedObserver().getExperienceGained());
 	}

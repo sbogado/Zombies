@@ -17,6 +17,9 @@ import zombies.scene.zombiesappearences.FatZombieAppearences;
 public class FatZombie extends Monstruo {
 	
 	private static final int EXPERIENCE = 500;
+	private static final int MONSTER_TOTAL_LIFE = 250;
+	
+	
 	private List<ZombiesRule> rules = new ArrayList<ZombiesRule>();
 	private DesplazamientoLibreRule desplazamientoRule;
 	private ColisionRule colisionRule;
@@ -52,7 +55,7 @@ public class FatZombie extends Monstruo {
 				,50 //puntos o exp
 				,0.1 // tiempo De Recuperacion De Impacto
 				,50 // danio
-				,500 //vida
+				,MONSTER_TOTAL_LIFE //vida
 				,1 // tiempo de golpe
 				,scena);// escena
 		

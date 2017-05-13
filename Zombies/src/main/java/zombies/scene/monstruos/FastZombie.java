@@ -17,7 +17,7 @@ import ar.edu.unq.games.vainillautils.AnimationLowCost;
 public class FastZombie extends Monstruo {
 	
 	private static final int EXPERIENCE = 100;
-	
+	private static final int MONSTER_TOTAL_LIFE = 10;
 	
 	private List<ZombiesRule> rules = new ArrayList<ZombiesRule>();
 	private DesplazamientoLibreRule desplazamientoRule;
@@ -54,7 +54,7 @@ public class FastZombie extends Monstruo {
 				,20 //puntos o exp
 				,0.1 // tiempo De Recuperacion De Impacto
 				,10 // danio
-				,50 //vida
+				,MONSTER_TOTAL_LIFE //vida
 				,0.5 // tiempo de golpe
 				,scena);// escena
 		

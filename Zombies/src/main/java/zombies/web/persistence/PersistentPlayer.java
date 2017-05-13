@@ -13,5 +13,7 @@ public interface PersistentPlayer {
 	public Integer getTotalLife();
 	
 	public Integer getSpeedRecharge();
+	
+	public Integer getMovement();
 
 }

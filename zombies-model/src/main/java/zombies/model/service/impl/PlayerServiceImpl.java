@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import zombies.model.dao.DaoPlayer;
+import zombies.model.dao.DaoPlayerLevel;
 import zombies.model.model.Player;
 import zombies.model.model.PlayerMission;
 import zombies.model.service.PlayerService;
@@ -18,6 +19,9 @@ public class PlayerServiceImpl extends GenericABMService<Player> implements Seri
 	
 	@Autowired
 	DaoPlayer playerDao;
+	
+	@Autowired
+	DaoPlayerLevel playerLevelDao;
 
 	public Player findByName(String playerName){
 		return ((DaoPlayer) getDao()).findByName(playerName);
@@ -29,9 +33,27 @@ public class PlayerServiceImpl extends GenericABMService<Player> implements Seri
 	}
 	
 	@Override
+	public Player update(Player player) throws Exception{
+		if(player.getExperience() > player.getPlayerLevel().getExperienceToNextLevel() 
+				&& player.getPlayerLevel().getNextLevel() != null){
+			player.addSkillPoints(player.getPlayerLevel().getSkillPoints());
+			player.setPlayerLevel(getPlayerLevelDao().find(player.getPlayerLevel().getNextLevel().getId()));
+			
+		}
+		return getDao().update(player);
+	}
+	
+	@Override
 	public DaoPlayer getDao() {
 		return playerDao;
 	}
 
+	public DaoPlayerLevel getPlayerLevelDao() {
+		return playerLevelDao;
+	}
+
+	public void setPlayerLevelDao(DaoPlayerLevel playerLevelDao) {
+		this.playerLevelDao = playerLevelDao;
+	}
 
 }

@@ -8,6 +8,7 @@ import javax.faces.context.FacesContext;
 import zombies.model.authentication.UserCredential;
 import zombies.model.service.UserCredentialService;
 import zombies.web.AbstractController;
+import zombies.web.missions.MissionsCtrl;
 
 @ManagedBean
 @SessionScoped
@@ -15,6 +16,9 @@ public class AuthenticationCtrl extends AbstractController {
 
 	@ManagedProperty(value = "#{userCredentialServiceImpl}")
 	private UserCredentialService userCredentialService;
+	
+	@ManagedProperty(value = "#{missionsCtrl}")
+	private MissionsCtrl missionsCtrl;
 
 	private UserCredential user;
 	private String username;
@@ -28,11 +32,16 @@ public class AuthenticationCtrl extends AbstractController {
 				FacesContext.getCurrentInstance().validationFailed();
 			}else{
 				addInfoMessage("Bienvenido "+getUser().getName(), "Bienvenido "+getUser().getName());
+				initializeMissionCtrl();
 			}
 		} catch (Exception e) {
 			addErrorMessage("El usuario no existe", "El usuario no existe");
 			FacesContext.getCurrentInstance().validationFailed();
 		}
+	}
+
+	private void initializeMissionCtrl() {
+		getMissionsCtrl().initialize(getUser().getPlayer());;
 	}
 
 	public void logout() {
@@ -74,6 +83,14 @@ public class AuthenticationCtrl extends AbstractController {
 
 	public void setUserCredentialService(UserCredentialService userCredentialService) {
 		this.userCredentialService = userCredentialService;
+	}
+
+	public MissionsCtrl getMissionsCtrl() {
+		return missionsCtrl;
+	}
+
+	public void setMissionsCtrl(MissionsCtrl missionsCtrl) {
+		this.missionsCtrl = missionsCtrl;
 	}
 
 }

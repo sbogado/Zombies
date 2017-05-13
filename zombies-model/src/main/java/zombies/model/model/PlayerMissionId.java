@@ -1,10 +1,14 @@
 package zombies.model.model;
 
+import java.io.Serializable;
+
 import javax.persistence.Column;
 import javax.persistence.Embeddable;
 
 @Embeddable
-public class PlayerMissionId {
+public class PlayerMissionId implements Serializable{
+
+	private static final long serialVersionUID = -2223440158891419257L;
 
 	@Column(name = "PLAYER_ID")
 	private Long playerId;

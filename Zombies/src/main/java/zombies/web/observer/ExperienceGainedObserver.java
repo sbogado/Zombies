@@ -6,6 +6,10 @@ public class ExperienceGainedObserver implements MonsterKilledObserver{
 
 	private Integer experienceGained;
 	
+	public ExperienceGainedObserver() {
+		setExperienceGained(0);
+	}
+	
 	@Override
 	public void notifyMonsterKilledToObserver(Monstruo monstruo) {
 		addExperienceGained(monstruo.getExperience());

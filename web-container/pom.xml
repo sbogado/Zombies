@@ -7,7 +7,7 @@
 	<packaging>war</packaging>
 	<name>web-container Maven Webapp</name>
 	<url>http://maven.apache.org</url>
-	
+
 	<build>
 		<finalName>web-container</finalName>
 		<plugins>
@@ -76,6 +76,17 @@
 			<artifactId>primefaces</artifactId>
 			<version>${primefaces.version}</version>
 		</dependency>
+		<dependency>
+			<groupId>org.primefaces.extensions</groupId>
+			<artifactId>primefaces-extensions</artifactId>
+			<version>6.0.0</version>
+		</dependency>
+		<dependency>
+			<groupId>org.apache.commons</groupId>
+			<artifactId>commons-lang3</artifactId>
+			<version>3.0</version>
+		</dependency>
+
 		<dependency>
 			<groupId>zombies</groupId>
 			<artifactId>zombies</artifactId>

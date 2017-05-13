@@ -7,10 +7,10 @@ import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ManagedProperty;
 import javax.faces.bean.SessionScoped;
 
+import zombies.model.model.Player;
 import zombies.model.model.PlayerMission;
 import zombies.model.service.PlayerService;
 import zombies.web.AbstractController;
-import zombies.web.auth.AuthenticationCtrl;
 
 @ManagedBean
 @SessionScoped
@@ -19,22 +19,24 @@ public class MissionsCtrl extends AbstractController {
 	@ManagedProperty(value = "#{playerServiceImpl}")
 	private PlayerService playerService;
 	
-	@ManagedProperty(value = "#{authenticationCtrl}")
-	private AuthenticationCtrl authenticationCtrl;
+	private Player player; 
 
 	List<PlayerMission> missions;
 	
-	
+	public void initialize(Player player){
+		setPlayer(player);
+		findPlayerMissions();
+	}
+
+	private void findPlayerMissions() {
+		try {
+			setMissions(getPlayerService().findMissions(getPlayer().getId()));
+		} catch (Exception e) {
+			logger.log(Level.SEVERE, "Could not retrieve Missions",e);
+		}
+	}
 	
 	public List<PlayerMission> getMissions(){
-		if(missions == null){
-			try {
-				setMissions(getPlayerService().findMissions(getAuthenticationCtrl().getUser().getPlayer().getId()));
-			} catch (Exception e) {
-				logger.log(Level.SEVERE, "Could not retrieve Missions",e);
-			}
-		}
-		
 		return missions;
 	}
 
@@ -50,12 +52,12 @@ public class MissionsCtrl extends AbstractController {
 		this.playerService = playerService;
 	}
 
-	public AuthenticationCtrl getAuthenticationCtrl() {
-		return authenticationCtrl;
+	public Player getPlayer() {
+		return player;
 	}
 
-	public void setAuthenticationCtrl(AuthenticationCtrl authenticationCtrl) {
-		this.authenticationCtrl = authenticationCtrl;
+	public void setPlayer(Player player) {
+		this.player = player;
 	}
-
+	
 }

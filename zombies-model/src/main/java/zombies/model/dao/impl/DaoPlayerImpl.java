@@ -43,7 +43,7 @@ public class DaoPlayerImpl extends DaoGenericImpl<Player> implements DaoPlayer{
 		predicates.add(cb.equal(root.get("id").get("playerId"),playerId));
 		
 		criteria.where(predicates.toArray(new Predicate[predicates.size()]));
-		criteria.orderBy(cb.desc(root.get("mission").get("order")));
+		criteria.orderBy(cb.asc(root.get("mission").get("order")));
 		TypedQuery<PlayerMission> q = em.createQuery(criteria);
 		
 		return q.getResultList();

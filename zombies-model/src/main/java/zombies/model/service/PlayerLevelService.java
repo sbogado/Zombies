@@ -6,5 +6,7 @@ public interface PlayerLevelService extends GenericService<PlayerLevel>{
 
 	public PlayerLevel findByNumber(Integer number) throws Exception;
 
+	PlayerLevel findById(Long id) throws Exception;
+
 	
 }

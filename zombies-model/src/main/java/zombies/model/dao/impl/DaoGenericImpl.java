@@ -81,4 +81,7 @@ public class DaoGenericImpl<T> implements DaoGeneric<T> {
 		return list;
 	}
 
+	public Class<T> getType(){
+		return type;
+	}
 }

@@ -7,4 +7,5 @@ public interface DaoGeneric<T> {
 	T update(T t);
 	void remove(T t);
 	List<T> genericSearchAll();
+	T find(Object id);
 }

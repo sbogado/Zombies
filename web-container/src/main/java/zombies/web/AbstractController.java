@@ -2,6 +2,7 @@ package zombies.web;
 
 import java.util.logging.Logger;
 
+import javax.faces.application.ConfigurableNavigationHandler;
 import javax.faces.application.FacesMessage;
 import javax.faces.application.FacesMessage.Severity;
 import javax.faces.context.FacesContext;
@@ -45,6 +46,12 @@ public class AbstractController {
 		msg.setSummary(title);
 		msg.setDetail(description);
 		return msg;
+	}
+	
+	public void redirect(String uri) {
+		ConfigurableNavigationHandler nav = (ConfigurableNavigationHandler) FacesContext
+				.getCurrentInstance().getApplication().getNavigationHandler();
+		nav.performNavigation(uri);
 	}
 
 }

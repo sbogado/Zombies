@@ -23,7 +23,7 @@
 					required="true" label="password" />
 
 				<f:facet name="footer">
-					<p:commandButton value="Login" update="#{id}form loginPanel"
+					<p:commandButton value="Login" update="#{id}form loginPanel missionsPanel  skillPointsManagerPanel"
 						actionListener="#{authenticationCtrl.saveOperation()}"
 						oncomplete="if(!args.validationFailed) {
                                 PF('#{id}dialog').hide();

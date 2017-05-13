@@ -18,19 +18,29 @@
 
 		<p:growl id="mainGrowl" life="3000" />
 
-		<ui:include src="login-header.xhtml" />
-
-		<ui:include src="missions/missions-selector.xhtml" >
+		<ui:include src="login-header.xhtml" >
 			<ui:param name="externalPanelToUpdate" value="gameStartPanel" />
 		</ui:include>
 
+		<p:outputPanel id="skillPointsManagerPanel">
+			<ui:include src="player/skill-points-manager.xhtml">
+			</ui:include>
+		</p:outputPanel>
+
+		<p:outputPanel id="missionsPanel">
+			<ui:include src="missions/missions-selector.xhtml">
+				<ui:param name="externalPanelToUpdate" value="gameStartPanel" />
+			</ui:include>
+		</p:outputPanel>
+
 		<h:panelGrid id="gameStartPanel" columns="2" cellpadding="10">
 			<p:commandButton value="Jugar" id="gameStart"
-				disabled="#{gameStarterCtrl.mission == null}"
+				disabled="#{gameStarterCtrl.playerMission == null}"
 				actionListener="#{gameStarterCtrl.start}" update="mainGrowl" />
 			<br />
 			<br />
-			<h:outputText rendered="#{gameStarterCtrl.mission != null}" value="Mision: #{gameStarterCtrl.mission.name}" />
+			<h:outputText rendered="#{gameStarterCtrl.playerMission != null}"
+				value="Mision: #{gameStarterCtrl.playerMission.mission.name}" />
 		</h:panelGrid>
 	</p:outputPanel>
 </h:body>

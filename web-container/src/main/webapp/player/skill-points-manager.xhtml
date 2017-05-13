@@ -1,0 +1,72 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:c="http://java.sun.com/jstl/core"
+	xmlns:p="http://primefaces.org/ui">
+
+	<h:form id="skillPointsManagerForm"
+		rendered="#{authenticationCtrl.user != null and authenticationCtrl.user.player != null}">
+		<h:panelGrid columns="3" cellpadding="5" styleClass="ui-grid">
+
+			<h:outputLabel for="skillPointsLeft"
+				value="Puntos De Habilidad Disponibles:" />
+			<h:outputLabel id="skillPointsLeft"
+				value="#{skillPointsCtrl.skillPointsLeft}" />
+			<h:outputLabel id="playerSkillPoints" value="-Puntos de Habilidad-" />
+
+			<h:outputLabel for="totalLife" value="Vida Total: #{skillPointsCtrl.totalLifeSkillPointsToAdd}" />
+
+			<p:commandButton id="totalLife" value="+"
+				disabled="#{!skillPointsCtrl.hasSkillPoints()}"
+				update="skillPointsManagerForm"
+				actionListener="#{skillPointsCtrl.addSkillPointToTotalLife()}">
+			</p:commandButton>
+			<h:outputLabel id="totalLifeEarned"
+				value="Puntos en Vida Total: #{skillPointsCtrl.getPlayer().pointsAddedToTotalLife()}" />
+
+			<h:outputLabel for="hitRecovery" value="Recuperación de Impacto: #{skillPointsCtrl.hitRecoverySkillPointsToAdd}" />
+			<p:commandButton id="hitRecovery" value="+"
+				disabled="#{!skillPointsCtrl.hasSkillPoints()}"
+				update="skillPointsManagerForm"
+				actionListener="#{skillPointsCtrl.addSkillPointToHitRecovery()}">
+			</p:commandButton>
+			<h:outputLabel id="hitRecoveryEarned"
+				value="Puntos en Recuperación de Impacto: #{skillPointsCtrl.getPlayer().pointsAddedToHitRecovery()}" />
+
+			<h:outputLabel for="speedRecharge" value="Velocidad de Recarga: #{skillPointsCtrl.speedRechargeSkillPointsToAdd}" />
+			<p:commandButton id="speedRecharge" value="+"
+				disabled="#{!skillPointsCtrl.hasSkillPoints()}"
+				update="skillPointsManagerForm"
+				actionListener="#{skillPointsCtrl.addSkillPointToSpeedRecharge()}">
+			</p:commandButton>
+			<h:outputLabel id="speedRechargeEarned"
+				value="Puntos en Velocida de Recarga: #{skillPointsCtrl.getPlayer().pointsAddedToSpeedRecharge()}" />
+
+			<h:outputLabel for="movement" value="Velocidad de Movimiento: #{skillPointsCtrl.movementSkillPointsToAdd}" />
+			<p:commandButton id="movement" value="+"
+				disabled="#{!skillPointsCtrl.hasSkillPoints()}"
+				update="skillPointsManagerForm"
+				actionListener="#{skillPointsCtrl.addSkillPointToMovement()}">
+			</p:commandButton>
+			<h:outputLabel id="movementEarned"
+				value="Puntos en Movimiento: #{skillPointsCtrl.getPlayer().pointsAddedToMovement()}" />
+
+			<h:outputLabel for="aim" value="Puntería: #{skillPointsCtrl.aimSkillPointsToAdd}" />
+			<p:commandButton id="aim" value="+"
+				disabled="#{!skillPointsCtrl.hasSkillPoints()}"
+				update="skillPointsManagerForm"
+				actionListener="#{skillPointsCtrl.addSkillPointToAim()}">
+			</p:commandButton>
+			<h:outputLabel id="aimEarned"
+				value="Puntos en Puntería: #{skillPointsCtrl.getPlayer().pointsAddedToAim()}" />
+
+		</h:panelGrid>
+		<p:commandButton value="Aprender" update="skillPointsManagerForm"
+			actionListener="#{skillPointsCtrl.saveOperation()}" />
+		<p:commandButton value="Limpiar" update="skillPointsManagerForm"
+			actionListener="#{skillPointsCtrl.resetSkillPoints()}" />	
+	</h:form>
+
+
+</ui:composition>

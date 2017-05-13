@@ -10,8 +10,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
-import javax.persistence.JoinTable;
-import javax.persistence.ManyToMany;
+import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
@@ -21,11 +20,43 @@ import zombies.web.persistence.PersistentPlayer;
 @Table(name = "PLAYER")
 public class Player implements Serializable,PersistentPlayer {
 	
+	/***************************************** INITIAL STATS *************************/
+	
+	public static final int INITIAL_PLAYER_LEVEL = 1;
+
+	public static final int INITIAL_SKILL_POINTS = 0;
+
+	public static final int INITIAL_SPEED_RECHARGE = 1;
+
+	public static final int INITIAL_MOVEMENT = 200;
+
+	public static final int INITIAL_MONEY = 0;
+
+	public static final int INITIAL_TOTAL_LIFE = 100;
+
+	public static final int INITIAL_HIT_RECOVERY = 1;
+
+	public static final int INITIAL_EXPERIENCE = 0;
+
+	public static final int INITIAL_SCENE = 1;
+
+	public static final int INITIAL_AIM = 1;
+	
+	/***************************************** INITIAL STATS *************************/
+	
+	/*****************************************  STATS PER POINT*************************/
+	
+	private static final int MOVEMENT_PER_SKILL_POINT = 50;
+
 	private static final int SPEED_RECHARGE_PER_SKILL_POINT = 1;
 
 	private static final int HIT_RECOVERY_PER_SKILL_POINT = 1;
+	
+	private static final int AIM_PER_SKILL_POINT = 1;
 
 	private static final int LIFE_PER_SKILL_POINT = 20;
+	
+	/*****************************************  STATS PER POINT*************************/
 
 	private static final long serialVersionUID = 1300776856528206676L;
 
@@ -68,30 +99,75 @@ public class Player implements Serializable,PersistentPlayer {
 	@JoinColumn(name = "PLAYER_LEVEL_ID", nullable = false)
 	private PlayerLevel playerLevel;
 	
-	@ManyToMany(cascade=CascadeType.REMOVE)
-	@JoinTable(name = "PLAYER_MISSION", joinColumns = @JoinColumn(name = "PLAYER_ID"), inverseJoinColumns = @JoinColumn(name = "PLAYER_ID"))
+	@OneToMany(cascade=CascadeType.REMOVE, mappedBy = "id.playerId")
 	private List<PlayerMission> missions;
 	
-	public void addSkillPointToTotalLife(){
-		if(hasSkillPoints()){
-			setTotalLife(getTotalLife() + LIFE_PER_SKILL_POINT);
+	public Integer pointsAddedToTotalLife(){
+		return (getTotalLife() - INITIAL_TOTAL_LIFE) / LIFE_PER_SKILL_POINT;
+	}
+	
+	public void addSkillPointToTotalLife(Integer amountOfPoint){
+		if(hasSkillPoints(amountOfPoint)){
+			setTotalLife(getTotalLife() + (amountOfPoint * LIFE_PER_SKILL_POINT));
+			useSkillPoints(amountOfPoint);
 		}
 	}
 	
-	public void addSkillPointToHitRecovery(){
-		if(hasSkillPoints()){
-			setHitRecovery(getHitRecovery() + HIT_RECOVERY_PER_SKILL_POINT);
+	public Integer pointsAddedToHitRecovery(){
+		return (getHitRecovery() - INITIAL_HIT_RECOVERY) / HIT_RECOVERY_PER_SKILL_POINT;
+	}
+	
+	public void addSkillPointToHitRecovery(Integer amountOfPoint){
+		if(hasSkillPoints(amountOfPoint)){
+			setHitRecovery(getHitRecovery() + (amountOfPoint * HIT_RECOVERY_PER_SKILL_POINT));
+			useSkillPoints(amountOfPoint);
 		}
 	}
 	
-	public void addSkillPointToSpeedRecharge(){
-		if(hasSkillPoints()){
-			setSpeedRecharge(getSpeedRecharge() + SPEED_RECHARGE_PER_SKILL_POINT);
+	public Integer pointsAddedToSpeedRecharge(){
+		return (getSpeedRecharge() - INITIAL_SPEED_RECHARGE) / SPEED_RECHARGE_PER_SKILL_POINT;
+	}
+	
+	public void addSkillPointToSpeedRecharge(Integer amountOfPoint){
+		if(hasSkillPoints(amountOfPoint)){
+			setSpeedRecharge(getSpeedRecharge() + (amountOfPoint * SPEED_RECHARGE_PER_SKILL_POINT));
+			useSkillPoints(amountOfPoint);
 		}
+	}
+	
+	
+	public Integer pointsAddedToMovement(){
+		return (getMovement() - INITIAL_MOVEMENT) / MOVEMENT_PER_SKILL_POINT;
+	}
+	
+	public void addSkillPointToMovement(Integer amountOfPoint){
+		if(hasSkillPoints(amountOfPoint)){
+			setMovement(getMovement() + (amountOfPoint * MOVEMENT_PER_SKILL_POINT )); 
+			useSkillPoints(amountOfPoint);
+		}
+	}
+	
+	public Integer pointsAddedToAim(){
+		return (getAim() - INITIAL_AIM) / AIM_PER_SKILL_POINT;
+	}
+	
+	public void addSkillPointToAim(Integer amountOfPoint){
+		if(hasSkillPoints(amountOfPoint)){
+			setAim(getAim() + (amountOfPoint * AIM_PER_SKILL_POINT )); 
+			useSkillPoints(amountOfPoint);
+		}
+	}
+	
+	public void addSkillPoints(Integer amountOfPoints){
+		setSkillPoints(getSkillPoints() + amountOfPoints);
+	}
+	
+	private void useSkillPoints(Integer amountOfPoint) {
+		setSkillPoints(getSkillPoints() - amountOfPoint);
 	}
 
-	private boolean hasSkillPoints() {
-		return getSkillPoints() > 0;
+	private boolean hasSkillPoints(Integer amountOfPoint ) {
+		return getSkillPoints() >= amountOfPoint;
 	}
 	
 	public String getName() {

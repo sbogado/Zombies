@@ -25,28 +25,6 @@ import zombies.web.AbstractController;
 @SessionScoped
 public class RegistrationCtrl extends AbstractController {
 
-	
-	
-	private static final int INITIAL_PLAYER_LEVEL = 1;
-
-	private static final int INITIAL_SKILL_POINTS = 0;
-
-	private static final int INITIAL_SPEED_RECHARGE = 1;
-
-	private static final int INITIAL_MOVEMENT = 1;
-
-	private static final int INITIAL_MONEY = 0;
-
-	private static final int INITIAL_TOTAL_LIFE = 100;
-
-	private static final int INITIAL_HIT_RECOVERY = 1;
-
-	private static final int INITIAL_EXPERIENCE = 0;
-
-	private static final int INITIAL_SCENE = 1;
-
-	private static final int INITIAL_AIM = 1;
-
 	@ManagedProperty(value = "#{userCredentialServiceImpl}")
 	private UserCredentialService userCredentialService;
 	
@@ -113,15 +91,15 @@ public class RegistrationCtrl extends AbstractController {
 	private Player initializePLayer() {
 		Player player = new Player();
 		player.setName(getUsername());
-		player.setAim(INITIAL_AIM);
-		player.setScene(INITIAL_SCENE);
-		player.setExperience(INITIAL_EXPERIENCE);
-		player.setHitRecovery(INITIAL_HIT_RECOVERY);
-		player.setTotalLife(INITIAL_TOTAL_LIFE);
-		player.setMoney(INITIAL_MONEY);
-		player.setMovement(INITIAL_MOVEMENT);
-		player.setSpeedRecharge(INITIAL_SPEED_RECHARGE);
-		player.setSkillPoints(INITIAL_SKILL_POINTS);
+		player.setAim(Player.INITIAL_AIM);
+		player.setScene(Player.INITIAL_SCENE);
+		player.setExperience(Player.INITIAL_EXPERIENCE);
+		player.setHitRecovery(Player.INITIAL_HIT_RECOVERY);
+		player.setTotalLife(Player.INITIAL_TOTAL_LIFE);
+		player.setMoney(Player.INITIAL_MONEY);
+		player.setMovement(Player.INITIAL_MOVEMENT);
+		player.setSpeedRecharge(Player.INITIAL_SPEED_RECHARGE);
+		player.setSkillPoints(Player.INITIAL_SKILL_POINTS);
 		
 		
 		initializePlayerLevel(player);
@@ -150,7 +128,7 @@ public class RegistrationCtrl extends AbstractController {
 
 	private void initializePlayerLevel(Player player) {
 		try {
-			player.setPlayerLevel(getPlayerLevelService().findByNumber(INITIAL_PLAYER_LEVEL));
+			player.setPlayerLevel(getPlayerLevelService().findByNumber(Player.INITIAL_PLAYER_LEVEL));
 		} catch (Exception e) {
 			logger.log(Level.SEVERE,"Could not retrieve first Level",e);
 		}

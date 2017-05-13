@@ -33,13 +33,13 @@ import zombiescene.strategies.ControlDelJugador;
 public class Personaje extends GameComponent<ZombiesScene> implements Individuo{
 
 	
+	private static final double HIT_RECOVERY_TIME_GAINED_PER_PLAYER_HIT_RECOVERY = 0.2;
 	private static final double BASE_HIT_RECOVERY_TIME = 0.5;
 	private PersistentPlayer player;
 	private Arma arma;
 	private int currentWeapon = 0;
 	private List<Arma> armas = new ArrayList<Arma>();
 	private double velocidad;
-	private double velocidadInicial;
 	private double xInicial;
 	private double yInicial;
 	private double xMin;
@@ -80,7 +80,6 @@ public class Personaje extends GameComponent<ZombiesScene> implements Individuo{
 		this.setPlayer(player);
 		this.setLabel(new Label(new Font("verdana",  Font.BOLD, 12), Color.green, "3"));
 		this.setZ(1);
-		this.setVelocidad(300);
 		this.soundBuilderDisparo = new SoundBuilderZombie(this.getClass().getClassLoader().getResourceAsStream("fx_1036.wav"));
 		this.personajeMuriendo = new SoundBuilderZombie(this.getClass().getClassLoader().getResourceAsStream("personaje gritando.wav")).getSound();
 		this. personajeGolpeado1 = new SoundBuilderZombie(this.getClass().getClassLoader().getResourceAsStream("personaje golpeado1.wav")).getSound();
@@ -99,7 +98,6 @@ public class Personaje extends GameComponent<ZombiesScene> implements Individuo{
 		
 		this.xInicial = x;
 		this.yInicial = y;
-		this.velocidadInicial = 500;
 		this.dimensionX = xMax;
 		this.dimensionY = yMax;
 		this.strategy = strategy;
@@ -114,8 +112,6 @@ public class Personaje extends GameComponent<ZombiesScene> implements Individuo{
 		this.addArma(this.arma);
 		this.addArma(new MP5(this));
 		this.addArma(new Benelli(this));
-		
-		
 	}
 
 	private void addArma(Arma arma) {
@@ -248,12 +244,6 @@ public class Personaje extends GameComponent<ZombiesScene> implements Individuo{
 		this.yInicial = yInicial;
 	}
 
-	public void centrar() {
-		this.setVelocidad(velocidadInicial);
-		this.setX(xInicial);
-		this.setY(yInicial);
-	}
-
 	public ControlDelJugador getStrategy() {
 		return strategy;
 	}
@@ -357,7 +347,7 @@ public class Personaje extends GameComponent<ZombiesScene> implements Individuo{
 	}
 
 	private void resetTiempoDeRecuperacionDeImpacto() {
-		this.tiempoDeRecuperacionDeImpacto = BASE_HIT_RECOVERY_TIME ;
+		this.tiempoDeRecuperacionDeImpacto = BASE_HIT_RECOVERY_TIME - (HIT_RECOVERY_TIME_GAINED_PER_PLAYER_HIT_RECOVERY * getPlayer().getHitRecovery()) ;
 	}
 
 	public boolean getEstaVivo() {
@@ -440,11 +430,7 @@ public class Personaje extends GameComponent<ZombiesScene> implements Individuo{
 	}
 
 	public double getVelocidad() {
-		return velocidad;
-	}
-
-	public void setVelocidad(double velocidad) {
-		this.velocidad = velocidad;
+		return getPlayer().getMovement();
 	}
 
 	public Vector2D getDireccion() {

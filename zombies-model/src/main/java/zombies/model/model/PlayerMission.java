@@ -1,5 +1,7 @@
 package zombies.model.model;
 
+import java.io.Serializable;
+
 import javax.persistence.Column;
 import javax.persistence.EmbeddedId;
 import javax.persistence.Entity;
@@ -9,7 +11,9 @@ import javax.persistence.Table;
 
 @Entity
 @Table(name = "PLAYER_MISSION")
-public class PlayerMission {
+public class PlayerMission implements Serializable{
+
+	private static final long serialVersionUID = 8981053859860129503L;
 
 	@EmbeddedId
 	private PlayerMissionId id;

@@ -27,6 +27,8 @@ import zombies.web.persistence.PersistentPlayer;
 @SessionScoped
 public class GameStarterCtrl extends AbstractController implements GameStarter{
 
+	private static final String INDEX_URL = "/index.xhtml";
+
 	@ManagedProperty(value = "#{playerServiceImpl}")
 	private PlayerService playerService;
 	
@@ -52,6 +54,7 @@ public class GameStarterCtrl extends AbstractController implements GameStarter{
 		Zombies game = new Zombies();
 		game.setGameStarter(this);
 		game.setPlayer(getAuthenticationCtrl().getUser().getPlayer());
+		game.setMission(getPlayerMission().getMission());
 		
 		SonidoAparte sonido = new SonidoAparte();
 		new DesktopGameLauncherNoVisible(sonido).launch();
@@ -66,13 +69,27 @@ public class GameStarterCtrl extends AbstractController implements GameStarter{
 
 	public void update(PersistentPlayer player){
 		try {
-			getPlayerMission().setIsAcomplished(true);
-			getPlayerMissionService().update(getPlayerMission());
 			Player persistedPlayer = getPlayerService().update((Player) player);
 			getAuthenticationCtrl().getUser().setPlayer(persistedPlayer);
 		} catch (Exception e) {
 			logger.log(Level.SEVERE,"Could not update Player", e);
 		}
+	}
+
+	public void updatePlayerMissionToAcomplished(PersistentPlayer player) {
+		try {
+			getPlayerMission().setIsAcomplished(true);
+			getPlayerMissionService().update(getPlayerMission());
+			update(player);
+		} catch (Exception e) {
+			logger.log(Level.SEVERE,"Could not update Player Level", e);
+		}
+		setPlayerMission(null);
+//		redirectToIndex();
+	}
+	
+	private void redirectToIndex(){
+		redirect(INDEX_URL);
 	}
 	
 	/***********************************

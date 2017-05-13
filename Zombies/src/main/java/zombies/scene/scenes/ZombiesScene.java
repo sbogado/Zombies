@@ -131,10 +131,14 @@ public class ZombiesScene extends GameScene implements TimeSubject {
 		}
 	}
 
+	
+	/*
+	 * Keep buildEndScene at the end of the method
+	 */
 	public void winGame() {
-		getGame().buildEndScene(true);
 		getGame().addRewardToPlayer();
-		getGame().updatePlayer();
+		getGame().updatePlayerMissionToAcomplished();
+		getGame().buildEndScene(true);
 	}
 
 	public void cargaFinalizada() {

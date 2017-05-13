@@ -1,5 +1,7 @@
 package zombies.model.model;
 
+import java.io.Serializable;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -14,7 +16,9 @@ import zombies.web.persistence.PersistentMission;
 @Entity
 @Inheritance(strategy=InheritanceType.JOINED)
 @Table(name = "MISSION")
-public abstract class Mission implements PersistentMission{
+public abstract class Mission implements PersistentMission ,Serializable{
+
+	private static final long serialVersionUID = 663126633732580451L;
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)

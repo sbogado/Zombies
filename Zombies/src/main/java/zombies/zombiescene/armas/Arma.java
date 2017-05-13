@@ -13,7 +13,7 @@ import com.uqbar.vainilla.sound.Sound;
 public abstract class Arma {
 
 	private static final double SPEED_RECHARGE_TIME_GAINED_PER_PLAYER_SPEED_RECHARGE = 0.2;
-	
+	private static final double AIM_GAINED_PER_PLAYER_AIM = 0.2; 
 	
 	Personaje personaje;
 	private int cantidadDeBalas;
@@ -37,7 +37,7 @@ public abstract class Arma {
 	public void disparar(double x, double y, Vector2D direccionPersonaje,double roatation,ZombiesScene scene){
 			double random = Math.random() - 0.5;
 			Vector2D direccion = new Vector2D(direccionPersonaje.getX(),direccionPersonaje.getY());
-			direccion.rotate(random*this.getPunteria()*(scene.getPersonaje().getPunteria()));
+			direccion.rotate((random*this.getPunteria())-(scene.getPersonaje().getPunteria() * AIM_GAINED_PER_PLAYER_AIM ));
 			
 			this.getSound().play();
 			this.descontarBala();

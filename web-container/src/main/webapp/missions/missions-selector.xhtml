@@ -5,12 +5,13 @@
 	xmlns:c="http://java.sun.com/jstl/core"
 	xmlns:p="http://primefaces.org/ui">
 
-	<h:form id="missionsSelectorPanel">
+	<h:form id="missionsSelectorPanel"
+	 rendered="#{authenticationCtrl.user != null and authenticationCtrl.user.player != null}">
 		<p:carousel value="#{missionsCtrl.missions}" var="playerMission"
 			numVisible="1" effect="easeInStrong" headerText="Misiones"
 			style="margin-bottom:0">
 			<p:tab title="#{playerMission.mission.name}">
-				<h:panelGrid columns="2" cellpadding="10">
+				<h:panelGrid columns="3" cellpadding="10">
 					<p:commandLink update="#{externalPanelToUpdate}" actionListener="#{gameStarterCtrl.setPlayerMission(playerMission)}" >
 						<p:graphicImage url="#{playerMission.mission.image}" width="200" height="200" />
 					</p:commandLink>
